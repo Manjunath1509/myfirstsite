@@ -1,0 +1,29 @@
+<!-- <h1 #h1Variable>
+
+</h1> -->
+<div class='gridd'>
+  <div class="form-group">
+    <label>Filter</label>
+    <input type="text" class="form-control" [(ngModel)]='searchTerm' placeholder="Search by Name" />
+  </div>
+
+
+
+  <!-- <div class="form-group grid-item">
+    <button class="btn btn-primary" (click)='ChangeEmplyeeName()'>Change Employee Name</button>
+  </div> -->
+</div>
+
+<div *ngFor="let employee of filterdEmployees">
+  <!-- <div (click)="h1Variable.innerHTML =childData.getEmployeeDetail()"> -->
+  <!-- <div (click)='onClick(employee.id)' class='pointer-cursor'> -->
+  <app-display-employees [employee]='employee' [searchTerm]='searchTerm' (notify)='deleteFilterEmployee($event)'></app-display-employees>
+  <!-- </div> -->
+  <!-- </div> -->
+
+</div>
+<div *ngIf='error'>{{error}}</div>
+<!-- <button (click)='nextEmployee() ' class="btn btn-primary">View next Employee</button>
+<br>
+<br>
+<app-display-employees [employee]='employeesToDisplay '></app-display-employees> -->

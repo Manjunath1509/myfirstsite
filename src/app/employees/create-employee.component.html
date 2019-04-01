@@ -1,0 +1,109 @@
+<form #employeeForm="ngForm" (ngSubmit)="saveEmployee()">
+  <div class="panel panel-primary" *ngIf='employee'>
+    <div class="panel-heading">
+      <h3>{{panelTitle}}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group" [class.has-error]='name.invalid && name.touched' [class.has-success]='name.valid'>
+        <label for="fullname" class='control-label'>Full Name</label>
+        <input required type="text" id="name" name="name" class="form-control" [(ngModel)]="employee.name" #name='ngModel' />
+        <span class='help-block' *ngIf='name.invalid && name.touched'>Full name required</span>
+      </div>
+
+      <div class="form-group" [class.has-error]='email.invalid'>
+        <label for="email" class='control-label'>Email</label>
+        <input [required]="contactPreference.value==='Email'" type="text" pattern="^[a-zA-Z0-9_+-\.]+@(impelsys)\.(com)$" id="email"
+          name="email" [(ngModel)]="employee.email" class="form-control" #email='ngModel' />
+        <span class='help-block' *ngIf='email.errors?.required'>Email is required</span>
+        <span class='help-block' *ngIf='email.errors?.pattern'>Email is invalid</span>
+
+      </div>
+
+      <div class="form-group" [class.has-error]='phoneNumber.invalid'>
+        <label for="phoneNumber" class='control-label'>Phone Number</label>
+        <input type="text" [required]="contactPreference.value==='Phone'" pattern='^[2-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
+          id="phoneNumber" #phoneNumber='ngModel' name="phoneNumber" [(ngModel)]="employee.phoneNumber" class="form-control"
+        />
+        <span class='help-block' *ngIf='phoneNumber.errors?.required'>phone number is required</span>
+        <span class='help-block' *ngIf='phoneNumber.errors?.pattern'>phone number is invalid</span>
+      </div>
+      <div class="form-group" [class.has-error]='contactPreference.invalid && contactPreference.touched' [class.has-success]='contactPreference.valid'>
+        <label class='control-label'>Contract Preference</label>
+        <div class="form-control">
+          <label class="radio-inline">
+            <input type="radio" name="contactPreference" required #contactPreference='ngModel' value="Email" [(ngModel)]="employee.contactPreference"
+            />Email</label>
+          <label class="radio-inline">
+            <input type="radio" name="contactPreference" required #contactPreference='ngModel' value="Phone" [(ngModel)]="employee.contactPreference"
+            />Phone</label>
+
+        </div>
+        <span class='help-block' *ngIf='contactPreference.errors?.required && contactPreference.touched'>contactPreference is required</span>
+
+      </div>
+
+      <div class="form-group" [class.has-error]='gender.invalid && gender.touched' [class.has-success]='gender.valid'>
+        <label class='control-label'>Gender</label>
+        <div class="form-control">
+          <label class="radio-inline">
+            <input type="radio" name="gender" required #gender='ngModel' value="Male" [(ngModel)]="employee.gender" />Male</label>
+          <label class="radio-inline">
+            <input type="radio" name="gender" required #gender='ngModel' value="Female" [(ngModel)]="employee.gender" />Female</label>
+        </div>
+        <span class='help-block' *ngIf='gender.errors?.required && gender.touched'>Gender is required</span>
+      </div>
+      <div class="form-group" [class.has-error]='isActive.invalid && isActive.touched'>
+        <div class="form-control">
+          <label class="checkbox-inline" class='control-label'>
+            <input type="checkbox" [required]='employee.isActive===null' name="isActive" #isActive='ngModel' [(ngModel)]="employee.isActive"
+            />Is Active
+          </label>
+        </div>
+        <span class='help-block' *ngIf='isActive.errors?.required && isActive.touched'>Active is required</span>
+      </div>
+      <div class="form-group" [class.has-error]='department.invalid && department.touched'>
+        <label for="department" class='control-label'>
+          Department
+        </label>
+        <select name="department" appSelectValidator='select' #department='ngModel' id="department" [(ngModel)]="employee.department"
+          class="form-control">
+          <option value='select'>Select department</option>
+          <option class="op" *ngFor="let depart of departments" [value]="depart.id">{{ depart.name }}</option>
+        </select>
+        <span class='help-block' *ngIf='department.touched && department.errors?.defaultSelected'>Department is required</span>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-5">
+          <label for="fullname">Date of birth</label>
+          <input type="text" bsDatepicker [bsConfig]="bsConfig" id="date" name="dateOfBirth" class="form-control" [(ngModel)]="employee.dateOfBirth"
+            placement="right" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="photoPath">Photo path</label>
+        <input type="text" id="photoPath" name="photoPath" [(ngModel)]="employee.photoPath" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <button type="button" class="btn btn-primary" (click)="previewPhotoshow()" *ngIf="employee.photoPath !== '' && employee.photoPath !== null ">
+          {{ previewPhoto ? "Hide" : "Show" }} Preview
+        </button>
+      </div>
+
+      <div class="form-group">
+        <img [src]="employee.photoPath" *ngIf="previewPhoto && employee.photoPath !== '' && employee.photoPath !== null" width="200"
+          height="200" />
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button type="submit" [disabled]='employeeForm.invalid' class="btn btn-primary">
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+
+
+{{ employeeForm.value | json }}
+<br>
+<br> our employee: {{employee | json}}

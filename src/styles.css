@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+
+/* .bs-datepicker-head {
+  background: #337ab7 !important;
+}
+.bs-datepicker-body table td span.selected,
+.bs-datepicker-body table td.selected span,
+.bs-datepicker-body table td span[class*="select-"]:after,
+.bs-datepicker-body table td[class*="select-"] span:after {
+  background: #337ab7 !important;
+}
+.bs-datepicker-body table td.week span {
+  color: #337ab7 !important;
+} */
